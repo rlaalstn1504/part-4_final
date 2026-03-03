@@ -1,0 +1,14 @@
+*.zip
+*.onnx
+*.run
+*.xz
+*.data
+*.plan
+*.deb
+*.gz
+/__pycache__
+temp.ipynb
+/temp
+settings.json
+.env
+.excalidraw
