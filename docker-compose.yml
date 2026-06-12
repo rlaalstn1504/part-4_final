@@ -32,5 +32,5 @@ services:
       POSTGRES_USER: app           # DB 사용자
       POSTGRES_PASSWORD: app       # DB 비밀번호
       POSTGRES_DB: appdb           # 기본 DB 이름
-    # volumes:
-      # - db_data:/var/lib/postgresql/data             # (수업용) 데이터 영속화가 필요 없으면
+    volumes:
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro  # 초기 스키마/데이터
