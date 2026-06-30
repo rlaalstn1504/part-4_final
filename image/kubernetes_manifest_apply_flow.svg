@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540" role="img" aria-labelledby="title desc">
+  <title id="title">Kubernetes 매니페스트 적용 흐름</title>
+  <desc id="desc">YAML 매니페스트를 kubectl apply로 적용하면 Kubernetes API가 Deployment와 Service를 만들고 Deployment가 Pod를 유지하는 흐름을 보여준다.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#334155"/>
+    </marker>
+    <style>
+      .label { font-family: "Noto Sans KR", "Apple SD Gothic Neo", Arial, sans-serif; fill: #0f172a; }
+      .muted { fill: #475569; }
+      .title { font-size: 27px; font-weight: 700; }
+      .section { font-size: 19px; font-weight: 700; }
+      .body { font-size: 16px; }
+      .small { font-size: 14px; }
+      .code { font-family: "SFMono-Regular", Consolas, monospace; font-size: 14px; }
+    </style>
+  </defs>
+  <rect width="960" height="540" fill="#ffffff"/>
+  <text x="480" y="38" text-anchor="middle" class="label title">매니페스트를 적용하면 무엇이 만들어질까?</text>
+  <text x="480" y="66" text-anchor="middle" class="label body muted">YAML은 원하는 상태를 적은 파일이고, apply는 그 상태를 클러스터에 반영하는 명령이다</text>
+  <rect x="42" y="132" width="202" height="230" rx="14" fill="#f8fafc" stroke="#64748b" stroke-width="2"/>
+  <text x="143" y="164" text-anchor="middle" class="label section">Manifest YAML</text>
+  <text x="143" y="196" text-anchor="middle" class="label code">time-api.yaml</text>
+  <text x="143" y="222" text-anchor="middle" class="label code">logger-api.yaml</text>
+  <text x="143" y="248" text-anchor="middle" class="label code">web-frontend.yaml</text>
+  <rect x="70" y="292" width="146" height="42" rx="10" fill="#ffffff" stroke="#cbd5e1"/>
+  <text x="143" y="319" text-anchor="middle" class="label small muted">이미지·개수·포트 설정</text>
+  <path d="M 248 247 H 318" fill="none" stroke="#334155" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <text x="283" y="229" text-anchor="middle" class="label code muted">kubectl apply</text>
+  <rect x="326" y="132" width="210" height="230" rx="14" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+  <text x="431" y="164" text-anchor="middle" class="label section">Kubernetes API</text>
+  <text x="431" y="197" text-anchor="middle" class="label body">설정 파일을 읽고</text>
+  <text x="431" y="223" text-anchor="middle" class="label body">클러스터 상태에 반영</text>
+  <rect x="362" y="292" width="138" height="42" rx="10" fill="#ffffff" stroke="#93c5fd"/>
+  <text x="431" y="319" text-anchor="middle" class="label small muted">원하는 상태 저장</text>
+  <path d="M 540 247 H 604" fill="none" stroke="#334155" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <rect x="612" y="104" width="300" height="324" rx="16" fill="#f0fdf4" stroke="#16a34a" stroke-width="2"/>
+  <text x="762" y="136" text-anchor="middle" class="label section">생성되는 K8s 리소스</text>
+  <rect x="642" y="168" width="118" height="58" rx="10" fill="#ffffff" stroke="#86efac" stroke-width="2"/>
+  <text x="701" y="192" text-anchor="middle" class="label body" font-weight="700">Deployment</text>
+  <text x="701" y="214" text-anchor="middle" class="label small muted">Pod 유지 담당</text>
+  <path d="M 762 197 H 810" fill="none" stroke="#334155" stroke-width="2.2" marker-end="url(#arrow)"/>
+  <rect x="816" y="168" width="70" height="58" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+  <text x="851" y="192" text-anchor="middle" class="label body" font-weight="700">Pod</text>
+  <text x="851" y="214" text-anchor="middle" class="label small muted">앱 실행</text>
+  <rect x="642" y="286" width="118" height="58" rx="10" fill="#ffffff" stroke="#86efac" stroke-width="2"/>
+  <text x="701" y="310" text-anchor="middle" class="label body" font-weight="700">Service</text>
+  <text x="701" y="332" text-anchor="middle" class="label small muted">고정 접속 통로</text>
+  <path d="M 762 315 H 810" fill="none" stroke="#334155" stroke-width="2.2" marker-end="url(#arrow)"/>
+  <rect x="816" y="286" width="70" height="58" rx="10" fill="#ffffff" stroke="#86efac" stroke-width="2"/>
+  <text x="851" y="311" text-anchor="middle" class="label body" font-weight="700">Pod</text>
+  <text x="851" y="333" text-anchor="middle" class="label small muted">요청 도착</text>
+  <rect x="226" y="458" width="508" height="42" rx="21" fill="#fefce8" stroke="#fde68a"/>
+  <text x="480" y="485" text-anchor="middle" class="label body">확인 명령: kubectl get pods, kubectl get svc</text>
+</svg>

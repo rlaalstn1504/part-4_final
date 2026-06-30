@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="520" viewBox="0 0 960 520" role="img" aria-labelledby="title desc">
+  <title id="title">Kubernetes 핵심 기능 도식</title>
+  <desc id="desc">Kubernetes의 핵심 기능인 자기 치유, 자동 확장, 무중단 배포, 트래픽 분산을 한눈에 비교한다.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#334155"/>
+    </marker>
+    <style>
+      .label { font-family: "Noto Sans KR", "Apple SD Gothic Neo", Arial, sans-serif; fill: #0f172a; }
+      .muted { fill: #475569; }
+      .title { font-size: 27px; font-weight: 700; }
+      .section { font-size: 21px; font-weight: 700; }
+      .body { font-size: 16px; }
+      .small { font-size: 14px; }
+      .chip { font-size: 13px; font-weight: 700; }
+    </style>
+  </defs>
+
+  <rect width="960" height="520" fill="#ffffff"/>
+  <text x="480" y="36" text-anchor="middle" class="label title">Kubernetes 핵심 자동화</text>
+  <text x="480" y="63" text-anchor="middle" class="label body muted">사람이 매번 처리하던 운영 작업을 클러스터가 계속 맞춰준다</text>
+
+  <rect x="382" y="216" width="196" height="88" rx="16" fill="#f8fafc" stroke="#334155" stroke-width="2"/>
+  <text x="480" y="251" text-anchor="middle" class="label section">K8s</text>
+  <text x="480" y="278" text-anchor="middle" class="label body muted">상태 감시와 자동 조정</text>
+
+  <rect x="48" y="100" width="342" height="126" rx="14" fill="#fef2f2" stroke="#ef4444" stroke-width="2"/>
+  <text x="219" y="133" text-anchor="middle" class="label section">자기 치유</text>
+  <text x="219" y="164" text-anchor="middle" class="label body">Pod나 Node 장애 감지</text>
+  <text x="219" y="191" text-anchor="middle" class="label body muted">정상 위치에 새 Pod 실행</text>
+
+  <rect x="570" y="100" width="342" height="126" rx="14" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+  <text x="741" y="133" text-anchor="middle" class="label section">자동 확장</text>
+  <text x="741" y="164" text-anchor="middle" class="label body">CPU·메모리 부하 확인</text>
+  <text x="741" y="191" text-anchor="middle" class="label body muted">Pod 수를 자동 증가·감소</text>
+
+  <rect x="48" y="334" width="342" height="126" rx="14" fill="#f5f3ff" stroke="#7c3aed" stroke-width="2"/>
+  <text x="219" y="367" text-anchor="middle" class="label section">무중단 배포</text>
+  <text x="219" y="398" text-anchor="middle" class="label body">v1 Pod와 v2 Pod를 순차 교체</text>
+  <text x="219" y="425" text-anchor="middle" class="label body muted">서비스 중단을 최소화</text>
+
+  <rect x="570" y="334" width="342" height="126" rx="14" fill="#ecfdf5" stroke="#16a34a" stroke-width="2"/>
+  <text x="741" y="367" text-anchor="middle" class="label section">트래픽 분산</text>
+  <text x="741" y="398" text-anchor="middle" class="label body">Service가 요청을 받음</text>
+  <text x="741" y="425" text-anchor="middle" class="label body muted">여러 Pod로 나누어 전달</text>
+
+  <path d="M 390 231 C 342 206, 313 185, 246 167" fill="none" stroke="#334155" stroke-width="2.3" marker-end="url(#arrow)"/>
+  <path d="M 570 231 C 618 206, 647 185, 714 167" fill="none" stroke="#334155" stroke-width="2.3" marker-end="url(#arrow)"/>
+  <path d="M 390 289 C 342 314, 313 358, 246 393" fill="none" stroke="#334155" stroke-width="2.3" marker-end="url(#arrow)"/>
+  <path d="M 570 289 C 618 314, 647 358, 714 393" fill="none" stroke="#334155" stroke-width="2.3" marker-end="url(#arrow)"/>
+
+  <rect x="424" y="132" width="112" height="34" rx="17" fill="#ffffff" stroke="#cbd5e1"/>
+  <text x="480" y="154" text-anchor="middle" class="label chip muted">운영 자동화</text>
+  <rect x="424" y="386" width="112" height="34" rx="17" fill="#ffffff" stroke="#cbd5e1"/>
+  <text x="480" y="408" text-anchor="middle" class="label chip muted">안정성 확보</text>
+</svg>

@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="500" viewBox="0 0 960 500" role="img" aria-labelledby="title desc">
+  <title id="title">Kubernetes 사용 사례 도식</title>
+  <desc id="desc">AI/ML 모델 서빙, 대규모 웹 트래픽, 금융 결제 시스템처럼 Kubernetes가 필요한 대표 상황을 보여준다.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#334155"/>
+    </marker>
+    <style>
+      .label { font-family: "Noto Sans KR", "Apple SD Gothic Neo", Arial, sans-serif; fill: #0f172a; }
+      .muted { fill: #475569; }
+      .title { font-size: 27px; font-weight: 700; }
+      .section { font-size: 20px; font-weight: 700; }
+      .body { font-size: 16px; }
+      .small { font-size: 14px; }
+      .chip { font-size: 13px; font-weight: 700; }
+    </style>
+  </defs>
+
+  <rect width="960" height="500" fill="#ffffff"/>
+  <text x="480" y="38" text-anchor="middle" class="label title">Kubernetes가 필요한 순간</text>
+  <text x="480" y="66" text-anchor="middle" class="label body muted">컨테이너 수와 서버 상태를 사람이 직접 맞추기 어려울 때 효과가 커진다</text>
+
+  <rect x="42" y="104" width="276" height="290" rx="14" fill="#f0f9ff" stroke="#0284c7" stroke-width="2"/>
+  <text x="180" y="139" text-anchor="middle" class="label section">AI/ML 모델 서빙</text>
+  <rect x="80" y="174" width="200" height="44" rx="10" fill="#ffffff" stroke="#7dd3fc"/>
+  <text x="180" y="202" text-anchor="middle" class="label body">추론 요청 증가</text>
+  <path d="M 180 222 V 252" fill="none" stroke="#334155" stroke-width="2" marker-end="url(#arrow)"/>
+  <rect x="80" y="258" width="200" height="44" rx="10" fill="#e0f2fe" stroke="#0284c7"/>
+  <text x="180" y="286" text-anchor="middle" class="label body">GPU Pod 확장</text>
+  <path d="M 180 306 V 336" fill="none" stroke="#334155" stroke-width="2" marker-end="url(#arrow)"/>
+  <rect x="80" y="342" width="200" height="34" rx="17" fill="#ffffff" stroke="#7dd3fc"/>
+  <text x="180" y="364" text-anchor="middle" class="label small muted">요청 감소 시 축소</text>
+
+  <rect x="342" y="104" width="276" height="290" rx="14" fill="#fefce8" stroke="#ca8a04" stroke-width="2"/>
+  <text x="480" y="139" text-anchor="middle" class="label section">대규모 웹 트래픽</text>
+  <rect x="380" y="174" width="200" height="44" rx="10" fill="#ffffff" stroke="#fde68a"/>
+  <text x="480" y="202" text-anchor="middle" class="label body">이벤트 트래픽 폭증</text>
+  <path d="M 480 222 V 252" fill="none" stroke="#334155" stroke-width="2" marker-end="url(#arrow)"/>
+  <rect x="380" y="258" width="200" height="44" rx="10" fill="#fef3c7" stroke="#ca8a04"/>
+  <text x="480" y="286" text-anchor="middle" class="label body">Pod 여러 개로 처리</text>
+  <path d="M 480 306 V 336" fill="none" stroke="#334155" stroke-width="2" marker-end="url(#arrow)"/>
+  <rect x="380" y="342" width="200" height="34" rx="17" fill="#ffffff" stroke="#fde68a"/>
+  <text x="480" y="364" text-anchor="middle" class="label small muted">접속 부하 분산</text>
+
+  <rect x="642" y="104" width="276" height="290" rx="14" fill="#f0fdf4" stroke="#16a34a" stroke-width="2"/>
+  <text x="780" y="139" text-anchor="middle" class="label section">금융·결제 시스템</text>
+  <rect x="680" y="174" width="200" height="44" rx="10" fill="#ffffff" stroke="#bbf7d0"/>
+  <text x="780" y="202" text-anchor="middle" class="label body">서버 또는 Pod 장애</text>
+  <path d="M 780 222 V 252" fill="none" stroke="#334155" stroke-width="2" marker-end="url(#arrow)"/>
+  <rect x="680" y="258" width="200" height="44" rx="10" fill="#dcfce7" stroke="#16a34a"/>
+  <text x="780" y="286" text-anchor="middle" class="label body">다른 Node에서 복구</text>
+  <path d="M 780 306 V 336" fill="none" stroke="#334155" stroke-width="2" marker-end="url(#arrow)"/>
+  <rect x="680" y="342" width="200" height="34" rx="17" fill="#ffffff" stroke="#bbf7d0"/>
+  <text x="780" y="364" text-anchor="middle" class="label small muted">서비스 지속 운영</text>
+
+  <rect x="244" y="426" width="472" height="42" rx="21" fill="#f8fafc" stroke="#cbd5e1"/>
+  <text x="480" y="453" text-anchor="middle" class="label body">공통점: 트래픽 변화와 장애 상황을 자동으로 흡수해야 한다</text>
+</svg>

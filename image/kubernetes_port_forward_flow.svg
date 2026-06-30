@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="520" viewBox="0 0 960 520" role="img" aria-labelledby="title desc">
+  <title id="title">kubectl port-forward 접속 흐름</title>
+  <desc id="desc">브라우저의 localhost 8080 요청이 kubectl port-forward를 통해 Kubernetes Service와 Pod로 전달되는 흐름을 보여준다.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#334155"/>
+    </marker>
+    <marker id="arrow-green" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#16a34a"/>
+    </marker>
+    <style>
+      .label { font-family: "Noto Sans KR", "Apple SD Gothic Neo", Arial, sans-serif; fill: #0f172a; }
+      .muted { fill: #475569; }
+      .title { font-size: 27px; font-weight: 700; }
+      .section { font-size: 19px; font-weight: 700; }
+      .body { font-size: 16px; }
+      .small { font-size: 14px; }
+      .code { font-family: "SFMono-Regular", Consolas, monospace; font-size: 14px; }
+    </style>
+  </defs>
+  <rect width="960" height="520" fill="#ffffff"/>
+  <text x="480" y="38" text-anchor="middle" class="label title">port-forward는 로컬 포트와 Service를 직접 연결한다</text>
+  <text x="480" y="66" text-anchor="middle" class="label body muted">WSL이나 원격 서버에서는 Minikube 내부 IP보다 로컬 포트 연결이 더 단순하다</text>
+  <rect x="48" y="160" width="166" height="96" rx="14" fill="#f8fafc" stroke="#64748b" stroke-width="2"/>
+  <text x="131" y="195" text-anchor="middle" class="label section">브라우저</text>
+  <text x="131" y="224" text-anchor="middle" class="label code">localhost:8080</text>
+  <path d="M 218 208 H 286" fill="none" stroke="#334155" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <rect x="294" y="142" width="230" height="132" rx="14" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+  <text x="409" y="176" text-anchor="middle" class="label section">kubectl port-forward</text>
+  <text x="409" y="208" text-anchor="middle" class="label code">8080:80</text>
+  <text x="409" y="236" text-anchor="middle" class="label small muted">터미널이 켜져 있는 동안 연결 유지</text>
+  <path d="M 528 208 H 596" fill="none" stroke="#16a34a" stroke-width="2.5" marker-end="url(#arrow-green)"/>
+  <rect x="604" y="112" width="300" height="192" rx="16" fill="#f0fdf4" stroke="#16a34a" stroke-width="2"/>
+  <text x="754" y="144" text-anchor="middle" class="label section">Kubernetes 내부</text>
+  <rect x="636" y="174" width="112" height="58" rx="10" fill="#ffffff" stroke="#86efac" stroke-width="2"/>
+  <text x="692" y="198" text-anchor="middle" class="label body" font-weight="700">Service</text>
+  <text x="692" y="220" text-anchor="middle" class="label code">web-frontend:80</text>
+  <path d="M 752 203 H 808" fill="none" stroke="#334155" stroke-width="2.2" marker-end="url(#arrow)"/>
+  <rect x="814" y="174" width="66" height="58" rx="10" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+  <text x="847" y="198" text-anchor="middle" class="label body" font-weight="700">Pod</text>
+  <text x="847" y="220" text-anchor="middle" class="label small muted">웹 앱</text>
+  <rect x="72" y="348" width="350" height="52" rx="12" fill="#fff7ed" stroke="#fed7aa"/>
+  <text x="247" y="371" text-anchor="middle" class="label body" font-weight="700">NodePort 방식</text>
+  <text x="247" y="392" text-anchor="middle" class="label small muted">Minikube 내부 IP가 브라우저에서 바로 안 열릴 수 있음</text>
+  <path d="M 430 374 H 524" fill="none" stroke="#ea580c" stroke-width="2.2" stroke-dasharray="6 6"/>
+  <text x="477" y="355" text-anchor="middle" class="label code muted">192.168.49.2:30080</text>
+  <rect x="560" y="348" width="328" height="52" rx="12" fill="#ecfdf5" stroke="#bbf7d0"/>
+  <text x="724" y="371" text-anchor="middle" class="label body" font-weight="700">port-forward 방식</text>
+  <text x="724" y="392" text-anchor="middle" class="label small muted">현재 머신의 localhost로 안정적으로 확인</text>
+</svg>

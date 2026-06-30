@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="520" viewBox="0 0 960 520" role="img" aria-labelledby="title desc">
+  <title id="title">Minikube 이미지 빌드 위치</title>
+  <desc id="desc">Minikube가 자체 Docker 환경을 사용하므로 Kubernetes가 이미지를 쓰려면 Minikube 내부 이미지 저장소에 빌드해야 함을 설명한다.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#334155"/>
+    </marker>
+    <marker id="arrow-green" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#16a34a"/>
+    </marker>
+    <style>
+      .label { font-family: "Noto Sans KR", "Apple SD Gothic Neo", Arial, sans-serif; fill: #0f172a; }
+      .muted { fill: #475569; }
+      .title { font-size: 27px; font-weight: 700; }
+      .section { font-size: 20px; font-weight: 700; }
+      .body { font-size: 16px; }
+      .small { font-size: 14px; }
+      .code { font-family: "SFMono-Regular", Consolas, monospace; font-size: 14px; }
+    </style>
+  </defs>
+  <rect width="960" height="520" fill="#ffffff"/>
+  <text x="480" y="38" text-anchor="middle" class="label title">Minikube에서 이미지가 보여야 Pod가 뜬다</text>
+  <text x="480" y="66" text-anchor="middle" class="label body muted">로컬 Docker와 Minikube Docker는 이미지 저장 위치가 다를 수 있다</text>
+  <rect x="42" y="112" width="266" height="284" rx="16" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
+  <text x="175" y="146" text-anchor="middle" class="label section">내 PC 일반 Docker</text>
+  <rect x="78" y="186" width="194" height="66" rx="10" fill="#ffffff" stroke="#94a3b8" stroke-width="2"/>
+  <text x="175" y="212" text-anchor="middle" class="label code">docker build</text>
+  <text x="175" y="236" text-anchor="middle" class="label small muted">기본 Docker 이미지 저장소</text>
+  <path d="M 175 256 V 298" fill="none" stroke="#ef4444" stroke-width="2.2" stroke-dasharray="6 6"/>
+  <text x="175" y="330" text-anchor="middle" class="label body" fill="#b91c1c">Minikube Pod가</text>
+  <text x="175" y="355" text-anchor="middle" class="label body" fill="#b91c1c">바로 못 찾을 수 있음</text>
+  <rect x="362" y="112" width="556" height="284" rx="16" fill="#f0fdf4" stroke="#16a34a" stroke-width="2"/>
+  <text x="640" y="146" text-anchor="middle" class="label section">Minikube Docker 환경</text>
+  <rect x="400" y="186" width="178" height="66" rx="10" fill="#ffffff" stroke="#86efac" stroke-width="2"/>
+  <text x="489" y="211" text-anchor="middle" class="label code">docker-env</text>
+  <text x="489" y="235" text-anchor="middle" class="label small muted">터미널 연결 후 빌드</text>
+  <rect x="400" y="286" width="178" height="66" rx="10" fill="#ffffff" stroke="#86efac" stroke-width="2"/>
+  <text x="489" y="311" text-anchor="middle" class="label code">minikube image</text>
+  <text x="489" y="335" text-anchor="middle" class="label small muted">직접 내부에 빌드</text>
+  <path d="M 582 219 H 636" fill="none" stroke="#16a34a" stroke-width="2.5" marker-end="url(#arrow-green)"/>
+  <path d="M 582 319 C 610 319, 616 259, 636 251" fill="none" stroke="#16a34a" stroke-width="2.5" marker-end="url(#arrow-green)"/>
+  <rect x="642" y="194" width="214" height="116" rx="12" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+  <text x="749" y="222" text-anchor="middle" class="label body" font-weight="700">Minikube 이미지 저장소</text>
+  <text x="749" y="252" text-anchor="middle" class="label code">time-api:1.0</text>
+  <text x="749" y="276" text-anchor="middle" class="label code">logger-api:1.0</text>
+  <text x="749" y="300" text-anchor="middle" class="label code">web-frontend:1.0</text>
+  <path d="M 749 314 V 352" fill="none" stroke="#334155" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <rect x="642" y="358" width="214" height="34" rx="17" fill="#ffffff" stroke="#86efac"/>
+  <text x="749" y="381" text-anchor="middle" class="label body">Pod가 이미지로 실행됨</text>
+  <rect x="274" y="430" width="412" height="44" rx="22" fill="#fefce8" stroke="#fde68a"/>
+  <text x="480" y="458" text-anchor="middle" class="label body">핵심: Kubernetes가 실행되는 쪽에서 이미지를 볼 수 있어야 한다</text>
+</svg>
