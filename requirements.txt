@@ -17,3 +17,4 @@ transformers>=4.44
 optimum>=1.21
 nvidia-tensorrt
 pycuda
+vllm==0.8.4
