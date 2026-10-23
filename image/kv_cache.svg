@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="742" viewBox="0 0 960 742" role="img" aria-labelledby="title desc">
+  <title id="title">KV 캐시 동작 원리</title>
+  <desc id="desc">캐시가 없을 때는 매 스텝마다 과거 토큰의 K/V를 전부 다시 계산하지만, KV 캐시를 쓰면 새 토큰의 K/V만 계산하고 과거 K/V는 저장된 값을 재사용한다.</desc>
+  <defs><style>
+    .label { font-family: "Noto Sans KR", "Noto Sans CJK KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif; fill: #0f172a; }
+    .muted { fill: #475569; }
+    .title { font-size: 27px; font-weight: 700; }
+    .section { font-size: 19px; font-weight: 700; }
+    .body { font-size: 15px; }
+    .small { font-size: 13px; }
+    .cell { font-size: 14px; font-weight: 600; }
+    .chip { font-size: 13px; font-weight: 700; }
+  </style></defs>
+  <rect width="960" height="742" fill="#ffffff"/>
+  <text x="480" y="42" text-anchor="middle" class="label title">KV 캐시 : 과거 K/V를 왜 저장할까?</text>
+  <rect x="286" y="58" width="16" height="16" rx="4" fill="#fff7ed" stroke="#f97316" stroke-width="2"/>
+  <text x="310" y="71" class="label small">GPU가 계산함</text>
+  <rect x="430" y="58" width="16" height="16" rx="4" fill="#eff6ff" stroke="#3b82f6" stroke-width="2"/>
+  <text x="454" y="71" class="label small">캐시에서 꺼내 씀 (계산 없음)</text>
+  <rect x="20" y="86" width="920" height="270" rx="14" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2"/>
+  <text x="44" y="116" class="label section">① KV 캐시 없음</text>
+  <text x="44" y="138" class="label muted small">매 스텝마다 과거 토큰의 K/V까지 전부 다시 계산합니다.</text>
+  <text x="290" y="166" text-anchor="middle" class="label body" style="font-weight:700">스텝 1</text>
+  <rect x="210" y="178" width="160" height="30" rx="7" fill="#fff7ed" stroke="#f97316" stroke-width="2"/>
+  <text x="290" y="198" text-anchor="middle" class="label cell" style="fill:#9a3412">나는  K·V</text>
+  <rect x="240" y="326" width="100" height="22" rx="11" fill="#e2e8f0"/>
+  <text x="290" y="341" text-anchor="middle" class="label chip" style="fill:#334155">계산 1회</text>
+  <text x="470" y="166" text-anchor="middle" class="label body" style="font-weight:700">스텝 2</text>
+  <rect x="390" y="178" width="160" height="30" rx="7" fill="#fff7ed" stroke="#f97316" stroke-width="2"/>
+  <text x="470" y="198" text-anchor="middle" class="label cell" style="fill:#9a3412">나는  K·V</text>
+  <rect x="390" y="214" width="160" height="30" rx="7" fill="#fff7ed" stroke="#f97316" stroke-width="2"/>
+  <text x="470" y="234" text-anchor="middle" class="label cell" style="fill:#9a3412">밥을  K·V</text>
+  <rect x="420" y="326" width="100" height="22" rx="11" fill="#e2e8f0"/>
+  <text x="470" y="341" text-anchor="middle" class="label chip" style="fill:#334155">계산 2회</text>
+  <text x="650" y="166" text-anchor="middle" class="label body" style="font-weight:700">스텝 3</text>
+  <rect x="570" y="178" width="160" height="30" rx="7" fill="#fff7ed" stroke="#f97316" stroke-width="2"/>
+  <text x="650" y="198" text-anchor="middle" class="label cell" style="fill:#9a3412">나는  K·V</text>
+  <rect x="570" y="214" width="160" height="30" rx="7" fill="#fff7ed" stroke="#f97316" stroke-width="2"/>
+  <text x="650" y="234" text-anchor="middle" class="label cell" style="fill:#9a3412">밥을  K·V</text>
+  <rect x="570" y="250" width="160" height="30" rx="7" fill="#fff7ed" stroke="#f97316" stroke-width="2"/>
+  <text x="650" y="270" text-anchor="middle" class="label cell" style="fill:#9a3412">먹었  K·V</text>
+  <rect x="600" y="326" width="100" height="22" rx="11" fill="#e2e8f0"/>
+  <text x="650" y="341" text-anchor="middle" class="label chip" style="fill:#334155">계산 3회</text>
+  <text x="830" y="166" text-anchor="middle" class="label body" style="font-weight:700">스텝 4</text>
+  <rect x="750" y="178" width="160" height="30" rx="7" fill="#fff7ed" stroke="#f97316" stroke-width="2"/>
+  <text x="830" y="198" text-anchor="middle" class="label cell" style="fill:#9a3412">나는  K·V</text>
+  <rect x="750" y="214" width="160" height="30" rx="7" fill="#fff7ed" stroke="#f97316" stroke-width="2"/>
+  <text x="830" y="234" text-anchor="middle" class="label cell" style="fill:#9a3412">밥을  K·V</text>
+  <rect x="750" y="250" width="160" height="30" rx="7" fill="#fff7ed" stroke="#f97316" stroke-width="2"/>
+  <text x="830" y="270" text-anchor="middle" class="label cell" style="fill:#9a3412">먹었  K·V</text>
+  <rect x="750" y="286" width="160" height="30" rx="7" fill="#fff7ed" stroke="#f97316" stroke-width="2"/>
+  <text x="830" y="306" text-anchor="middle" class="label cell" style="fill:#9a3412">다  K·V</text>
+  <rect x="780" y="326" width="100" height="22" rx="11" fill="#e2e8f0"/>
+  <text x="830" y="341" text-anchor="middle" class="label chip" style="fill:#334155">계산 4회</text>
+  <rect x="20" y="376" width="920" height="270" rx="14" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2"/>
+  <text x="44" y="406" class="label section">② KV 캐시 사용</text>
+  <text x="44" y="428" class="label muted small">새로 생긴 토큰의 K/V만 계산하고, 과거 K/V는 저장해 둔 값을 꺼내 씁니다.</text>
+  <text x="290" y="456" text-anchor="middle" class="label body" style="font-weight:700">스텝 1</text>
+  <rect x="210" y="468" width="160" height="30" rx="7" fill="#fff7ed" stroke="#f97316" stroke-width="2"/>
+  <text x="290" y="488" text-anchor="middle" class="label cell" style="fill:#9a3412">나는  K·V</text>
+  <rect x="240" y="616" width="100" height="22" rx="11" fill="#e2e8f0"/>
+  <text x="290" y="631" text-anchor="middle" class="label chip" style="fill:#334155">계산 1회</text>
+  <text x="470" y="456" text-anchor="middle" class="label body" style="font-weight:700">스텝 2</text>
+  <rect x="390" y="468" width="160" height="30" rx="7" fill="#eff6ff" stroke="#3b82f6" stroke-width="2"/>
+  <text x="470" y="488" text-anchor="middle" class="label cell" style="fill:#1e40af">나는  K·V</text>
+  <rect x="390" y="504" width="160" height="30" rx="7" fill="#fff7ed" stroke="#f97316" stroke-width="2"/>
+  <text x="470" y="524" text-anchor="middle" class="label cell" style="fill:#9a3412">밥을  K·V</text>
+  <rect x="420" y="616" width="100" height="22" rx="11" fill="#e2e8f0"/>
+  <text x="470" y="631" text-anchor="middle" class="label chip" style="fill:#334155">계산 1회</text>
+  <text x="650" y="456" text-anchor="middle" class="label body" style="font-weight:700">스텝 3</text>
+  <rect x="570" y="468" width="160" height="30" rx="7" fill="#eff6ff" stroke="#3b82f6" stroke-width="2"/>
+  <text x="650" y="488" text-anchor="middle" class="label cell" style="fill:#1e40af">나는  K·V</text>
+  <rect x="570" y="504" width="160" height="30" rx="7" fill="#eff6ff" stroke="#3b82f6" stroke-width="2"/>
+  <text x="650" y="524" text-anchor="middle" class="label cell" style="fill:#1e40af">밥을  K·V</text>
+  <rect x="570" y="540" width="160" height="30" rx="7" fill="#fff7ed" stroke="#f97316" stroke-width="2"/>
+  <text x="650" y="560" text-anchor="middle" class="label cell" style="fill:#9a3412">먹었  K·V</text>
+  <rect x="600" y="616" width="100" height="22" rx="11" fill="#e2e8f0"/>
+  <text x="650" y="631" text-anchor="middle" class="label chip" style="fill:#334155">계산 1회</text>
+  <text x="830" y="456" text-anchor="middle" class="label body" style="font-weight:700">스텝 4</text>
+  <rect x="750" y="468" width="160" height="30" rx="7" fill="#eff6ff" stroke="#3b82f6" stroke-width="2"/>
+  <text x="830" y="488" text-anchor="middle" class="label cell" style="fill:#1e40af">나는  K·V</text>
+  <rect x="750" y="504" width="160" height="30" rx="7" fill="#eff6ff" stroke="#3b82f6" stroke-width="2"/>
+  <text x="830" y="524" text-anchor="middle" class="label cell" style="fill:#1e40af">밥을  K·V</text>
+  <rect x="750" y="540" width="160" height="30" rx="7" fill="#eff6ff" stroke="#3b82f6" stroke-width="2"/>
+  <text x="830" y="560" text-anchor="middle" class="label cell" style="fill:#1e40af">먹었  K·V</text>
+  <rect x="750" y="576" width="160" height="30" rx="7" fill="#fff7ed" stroke="#f97316" stroke-width="2"/>
+  <text x="830" y="596" text-anchor="middle" class="label cell" style="fill:#9a3412">다  K·V</text>
+  <rect x="780" y="616" width="100" height="22" rx="11" fill="#e2e8f0"/>
+  <text x="830" y="631" text-anchor="middle" class="label chip" style="fill:#334155">계산 1회</text>
+  <rect x="20" y="666" width="920" height="60" rx="14" fill="#f0fdf4" stroke="#86efac" stroke-width="2"/>
+  <text x="44" y="692" class="label body"><tspan style="font-weight:700">토큰 4개를 만들 때 K/V 계산 횟수 : 10회 → 4회</tspan>  — 문장이 길어질수록 격차는 더 벌어집니다.</text>
+  <text x="44" y="713" class="label muted small">Q(Query)는 매 스텝 새로 계산합니다. 저장해 두고 재사용하는 것은 과거 토큰의 K와 V입니다.</text>
+</svg>

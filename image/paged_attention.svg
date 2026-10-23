@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="626" viewBox="0 0 960 626" role="img" aria-labelledby="t d">
+  <title id="t">PagedAttention 메모리 관리</title>
+  <desc id="d">기존 방식은 요청마다 최대 길이만큼 GPU 메모리를 미리 예약해 대부분을 낭비하지만, PagedAttention은 KV 캐시를 작은 블록으로 나눠 필요한 만큼만 할당하므로 같은 메모리로 더 많은 요청을 처리한다.</desc>
+  <defs>
+    <pattern id="waste" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <rect width="9" height="9" fill="#ffffff"/><line x1="0" y1="0" x2="0" y2="9" stroke="#cbd5e1" stroke-width="3.5"/>
+    </pattern>
+    <style>
+      .lb { font-family: "Noto Sans KR","Noto Sans CJK KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif; fill:#0f172a; }
+      .title { font-size:26px; font-weight:700; }
+      .sec { font-size:19px; font-weight:700; }
+      .body { font-size:15px; }
+      .blk { font-size:13px; font-weight:700; }
+      .st { font-size:16px; font-weight:700; }
+    </style>
+  </defs>
+  <rect width="960" height="626" fill="#ffffff"/>
+  <text x="480" y="44" text-anchor="middle" class="lb title">PagedAttention : KV 캐시를 작은 블록으로 쪼개 쓰기</text>
+  <rect x="20" y="76" width="920" height="205" rx="14" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2"/>
+  <text x="44" y="104" class="lb sec">① 기존 방식 — 요청마다 &#39;최대 길이&#39;만큼 통째로 예약</text>
+  <text x="200" y="126" text-anchor="middle" class="lb body">요청 A</text>
+  <rect x="60" y="134" width="280" height="56" fill="url(#waste)" stroke="#2563eb" stroke-width="2" stroke-dasharray="6 4"/>
+  <rect x="60" y="134" width="72" height="56" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+  <text x="96" y="167" text-anchor="middle" class="lb blk" style="fill:#2563eb">A</text>
+  <text x="236" y="167" text-anchor="middle" class="lb blk" style="fill:#64748b">예약만 하고 안 씀</text>
+  <text x="480" y="126" text-anchor="middle" class="lb body">요청 B</text>
+  <rect x="340" y="134" width="280" height="56" fill="url(#waste)" stroke="#059669" stroke-width="2" stroke-dasharray="6 4"/>
+  <rect x="340" y="134" width="56" height="56" fill="#d1fae5" stroke="#059669" stroke-width="2"/>
+  <text x="368" y="167" text-anchor="middle" class="lb blk" style="fill:#059669">B</text>
+  <text x="508" y="167" text-anchor="middle" class="lb blk" style="fill:#64748b">예약만 하고 안 씀</text>
+  <text x="760" y="126" text-anchor="middle" class="lb body">요청 C</text>
+  <rect x="620" y="134" width="280" height="56" fill="url(#waste)" stroke="#d97706" stroke-width="2" stroke-dasharray="6 4"/>
+  <rect x="620" y="134" width="88" height="56" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+  <text x="664" y="167" text-anchor="middle" class="lb blk" style="fill:#d97706">C</text>
+  <text x="804" y="167" text-anchor="middle" class="lb blk" style="fill:#64748b">예약만 하고 안 씀</text>
+  <text x="60" y="216" class="lb body"><tspan fill="#334155">색칠된 부분</tspan>만 실제로 쓰고, <tspan fill="#64748b">빗금 친 부분</tspan>은 예약해 둔 채로 놀고 있습니다.</text>
+  <text x="60" y="246" class="lb st" style="fill:#b91c1c">문제 : 메모리는 꽉 찼는데 실제 사용은 1/4뿐 → 새 요청은 대기</text>
+  <rect x="20" y="301" width="920" height="230" rx="14" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2"/>
+  <text x="44" y="329" class="lb sec">② PagedAttention — 작은 블록으로 나눠 필요한 만큼만</text>
+  <rect x="60.0" y="349" width="27.0" height="56" rx="4" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+  <text x="73.5" y="383" text-anchor="middle" class="lb blk" style="fill:#2563eb">A</text>
+  <rect x="90.0" y="349" width="27.0" height="56" rx="4" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+  <text x="103.5" y="383" text-anchor="middle" class="lb blk" style="fill:#2563eb">A</text>
+  <rect x="120.0" y="349" width="27.0" height="56" rx="4" fill="#d1fae5" stroke="#059669" stroke-width="2"/>
+  <text x="133.5" y="383" text-anchor="middle" class="lb blk" style="fill:#059669">B</text>
+  <rect x="150.0" y="349" width="27.0" height="56" rx="4" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+  <text x="163.5" y="383" text-anchor="middle" class="lb blk" style="fill:#d97706">C</text>
+  <rect x="180.0" y="349" width="27.0" height="56" rx="4" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+  <text x="193.5" y="383" text-anchor="middle" class="lb blk" style="fill:#2563eb">A</text>
+  <rect x="210.0" y="349" width="27.0" height="56" rx="4" fill="#d1fae5" stroke="#059669" stroke-width="2"/>
+  <text x="223.5" y="383" text-anchor="middle" class="lb blk" style="fill:#059669">B</text>
+  <rect x="240.0" y="349" width="27.0" height="56" rx="4" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+  <text x="253.5" y="383" text-anchor="middle" class="lb blk" style="fill:#d97706">C</text>
+  <rect x="270.0" y="349" width="27.0" height="56" rx="4" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+  <text x="283.5" y="383" text-anchor="middle" class="lb blk" style="fill:#d97706">C</text>
+  <rect x="300.0" y="349" width="27.0" height="56" rx="4" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+  <text x="313.5" y="383" text-anchor="middle" class="lb blk" style="fill:#7c3aed">D</text>
+  <rect x="330.0" y="349" width="27.0" height="56" rx="4" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+  <text x="343.5" y="383" text-anchor="middle" class="lb blk" style="fill:#7c3aed">D</text>
+  <rect x="360.0" y="349" width="27.0" height="56" rx="4" fill="#fce7f3" stroke="#db2777" stroke-width="2"/>
+  <text x="373.5" y="383" text-anchor="middle" class="lb blk" style="fill:#db2777">E</text>
+  <rect x="390.0" y="349" width="27.0" height="56" rx="4" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+  <text x="403.5" y="383" text-anchor="middle" class="lb blk" style="fill:#7c3aed">D</text>
+  <rect x="420.0" y="349" width="27.0" height="56" rx="4" fill="#fce7f3" stroke="#db2777" stroke-width="2"/>
+  <text x="433.5" y="383" text-anchor="middle" class="lb blk" style="fill:#db2777">E</text>
+  <rect x="450.0" y="349" width="27.0" height="56" rx="4" fill="#fce7f3" stroke="#db2777" stroke-width="2"/>
+  <text x="463.5" y="383" text-anchor="middle" class="lb blk" style="fill:#db2777">E</text>
+  <rect x="480.0" y="349" width="27.0" height="56" rx="4" fill="#fce7f3" stroke="#db2777" stroke-width="2"/>
+  <text x="493.5" y="383" text-anchor="middle" class="lb blk" style="fill:#db2777">E</text>
+  <rect x="510.0" y="349" width="27.0" height="56" rx="4" fill="#ffffff" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="4 3"/>
+  <rect x="540.0" y="349" width="27.0" height="56" rx="4" fill="#ffffff" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="4 3"/>
+  <rect x="570.0" y="349" width="27.0" height="56" rx="4" fill="#ffffff" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="4 3"/>
+  <rect x="600.0" y="349" width="27.0" height="56" rx="4" fill="#ffffff" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="4 3"/>
+  <rect x="630.0" y="349" width="27.0" height="56" rx="4" fill="#ffffff" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="4 3"/>
+  <rect x="660.0" y="349" width="27.0" height="56" rx="4" fill="#ffffff" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="4 3"/>
+  <rect x="690.0" y="349" width="27.0" height="56" rx="4" fill="#ffffff" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="4 3"/>
+  <rect x="720.0" y="349" width="27.0" height="56" rx="4" fill="#ffffff" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="4 3"/>
+  <rect x="750.0" y="349" width="27.0" height="56" rx="4" fill="#ffffff" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="4 3"/>
+  <rect x="780.0" y="349" width="27.0" height="56" rx="4" fill="#ffffff" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="4 3"/>
+  <rect x="810.0" y="349" width="27.0" height="56" rx="4" fill="#ffffff" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="4 3"/>
+  <rect x="840.0" y="349" width="27.0" height="56" rx="4" fill="#ffffff" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="4 3"/>
+  <rect x="870.0" y="349" width="27.0" height="56" rx="4" fill="#ffffff" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="4 3"/>
+  <text x="405" y="425" text-anchor="middle" class="lb body" style="fill:#7c3aed">↑ 남는 자리에 새 요청 D·E 투입</text>
+  <text x="690" y="425" text-anchor="middle" class="lb body" style="fill:#64748b">↑ 아직 비어 있는 블록</text>
+  <text x="60" y="457" class="lb body">요청 A·B·C가 쓰는 양은 그대로인데 낭비가 사라졌고, 블록은 <tspan fill="#334155">메모리 여기저기 흩어져 있어도 됩니다.</tspan></text>
+  <text x="60" y="490" class="lb st" style="fill:#15803d">결과 : 같은 GPU 메모리로 동시 처리 요청 3개 → 5개, 자리는 아직 남음</text>
+  <rect x="20" y="551" width="920" height="55" rx="14" fill="#f0fdf4" stroke="#86efac" stroke-width="2"/>
+  <text x="44" y="577" class="lb body"><tspan style="font-weight:700">핵심 : &#34;미리 크게 예약&#34;에서 &#34;필요할 때 한 블록씩&#34;으로 바꾼 것</tspan></text>
+  <text x="44" y="597" class="lb body" style="fill:#475569">운영체제가 메모리를 페이지 단위로 관리하는 방식을 KV 캐시에 그대로 적용한 것입니다.</text>
+</svg>

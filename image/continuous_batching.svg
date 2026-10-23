@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="752" viewBox="0 0 960 752" role="img" aria-labelledby="t d">
+  <title id="t">Continuous Batching과 Fused Kernel</title>
+  <desc id="d">Static batching은 배치 안의 가장 긴 요청이 끝날 때까지 빈 슬롯이 대기하지만, Continuous batching은 요청이 끝난 슬롯에 즉시 새 요청을 넣어 같은 시간에 더 많은 요청을 처리한다. Fused kernel은 여러 연산을 하나의 커널로 묶어 메모리 왕복을 줄인다.</desc>
+  <defs>
+    <pattern id="idle" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <rect width="9" height="9" fill="#ffffff"/><line x1="0" y1="0" x2="0" y2="9" stroke="#cbd5e1" stroke-width="3.5"/>
+    </pattern>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#64748b"/></marker>
+    <style>
+      .lb { font-family: "Noto Sans KR","Noto Sans CJK KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif; fill:#0f172a; }
+      .title { font-size:26px; font-weight:700; } .sec { font-size:19px; font-weight:700; }
+      .body { font-size:15px; } .small { font-size:13px; } .blk { font-size:14px; font-weight:700; } .st { font-size:16px; font-weight:700; }
+    </style>
+  </defs>
+  <rect width="960" height="752" fill="#ffffff"/>
+  <text x="480" y="44" text-anchor="middle" class="lb title">Continuous Batching : 끝난 자리를 바로 채우기</text>
+  <rect x="20" y="70" width="920" height="250" rx="14" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2"/>
+  <text x="44" y="100" class="lb sec">① Static batching — 배치 단위로 묶어서 한꺼번에 교체</text>
+  <text x="150" y="130" text-anchor="middle" class="lb small" style="fill:#64748b">0</text>
+  <text x="225" y="130" text-anchor="middle" class="lb small" style="fill:#64748b">1</text>
+  <text x="300" y="130" text-anchor="middle" class="lb small" style="fill:#64748b">2</text>
+  <text x="375" y="130" text-anchor="middle" class="lb small" style="fill:#64748b">3</text>
+  <text x="450" y="130" text-anchor="middle" class="lb small" style="fill:#64748b">4</text>
+  <text x="525" y="130" text-anchor="middle" class="lb small" style="fill:#64748b">5</text>
+  <text x="600" y="130" text-anchor="middle" class="lb small" style="fill:#64748b">6</text>
+  <text x="675" y="130" text-anchor="middle" class="lb small" style="fill:#64748b">7</text>
+  <text x="750" y="130" text-anchor="middle" class="lb small" style="fill:#64748b">8</text>
+  <text x="825" y="130" text-anchor="middle" class="lb small" style="fill:#64748b">9</text>
+  <text x="900" y="130" text-anchor="middle" class="lb small" style="fill:#64748b">10</text>
+  <text x="138" y="130" text-anchor="end" class="lb small" style="fill:#64748b">토큰 생성 스텝 →</text>
+  <text x="138" y="160" text-anchor="end" class="lb body">GPU 슬롯 1</text>
+  <rect x="152" y="140" width="221" height="30" rx="5" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+  <text x="262.5" y="160" text-anchor="middle" class="lb blk" style="fill:#2563eb">A</text>
+  <rect x="377" y="140" width="371" height="30" rx="5" fill="url(#idle)" stroke="#cbd5e1" stroke-width="1.5"/>
+  <text x="562.5" y="160" text-anchor="middle" class="lb small" style="fill:#64748b">대기 (GPU 놀고 있음)</text>
+  <rect x="752" y="140" width="146" height="30" rx="5" fill="#fce7f3" stroke="#db2777" stroke-width="2"/>
+  <text x="825.0" y="160" text-anchor="middle" class="lb blk" style="fill:#db2777">E</text>
+  <text x="138" y="196" text-anchor="end" class="lb body">GPU 슬롯 2</text>
+  <rect x="152" y="176" width="596" height="30" rx="5" fill="#d1fae5" stroke="#059669" stroke-width="2"/>
+  <text x="450.0" y="196" text-anchor="middle" class="lb blk" style="fill:#059669">B</text>
+  <rect x="752" y="176" width="146" height="30" rx="5" fill="#cffafe" stroke="#0891b2" stroke-width="2"/>
+  <text x="825.0" y="196" text-anchor="middle" class="lb blk" style="fill:#0891b2">F</text>
+  <text x="138" y="232" text-anchor="end" class="lb body">GPU 슬롯 3</text>
+  <rect x="152" y="212" width="146" height="30" rx="5" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+  <text x="225.0" y="232" text-anchor="middle" class="lb blk" style="fill:#d97706">C</text>
+  <rect x="302" y="212" width="446" height="30" rx="5" fill="url(#idle)" stroke="#cbd5e1" stroke-width="1.5"/>
+  <text x="525.0" y="232" text-anchor="middle" class="lb small" style="fill:#64748b">대기 (GPU 놀고 있음)</text>
+  <rect x="752" y="212" width="146" height="30" rx="5" fill="#fee2e2" stroke="#dc2626" stroke-width="2"/>
+  <text x="825.0" y="232" text-anchor="middle" class="lb blk" style="fill:#dc2626">G</text>
+  <text x="138" y="268" text-anchor="end" class="lb body">GPU 슬롯 4</text>
+  <rect x="152" y="248" width="371" height="30" rx="5" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+  <text x="337.5" y="268" text-anchor="middle" class="lb blk" style="fill:#7c3aed">D</text>
+  <rect x="527" y="248" width="221" height="30" rx="5" fill="url(#idle)" stroke="#cbd5e1" stroke-width="1.5"/>
+  <text x="637.5" y="268" text-anchor="middle" class="lb small" style="fill:#64748b">대기 (GPU 놀고 있음)</text>
+  <rect x="752" y="248" width="146" height="30" rx="5" fill="#ecfccb" stroke="#4d7c0f" stroke-width="2"/>
+  <text x="825.0" y="268" text-anchor="middle" class="lb blk" style="fill:#4d7c0f">H</text>
+  <text x="60" y="304" class="lb st" style="fill:#b91c1c">문제 : 짧은 요청이 먼저 끝나도 가장 긴 B를 기다림 → 스텝 10까지 완료 4개</text>
+  <line x1="750" y1="136" x2="750" y2="282" stroke="#b91c1c" stroke-width="2" stroke-dasharray="5 4"/>
+  <text x="750" y="100" text-anchor="middle" class="lb small" style="fill:#b91c1c">가장 긴 B가 끝나야 다음 배치 시작 ↓</text>
+  <rect x="20" y="340" width="920" height="250" rx="14" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2"/>
+  <text x="44" y="370" class="lb sec">② Continuous batching — 매 스텝마다 끝난 자리를 바로 교체</text>
+  <text x="150" y="400" text-anchor="middle" class="lb small" style="fill:#64748b">0</text>
+  <text x="225" y="400" text-anchor="middle" class="lb small" style="fill:#64748b">1</text>
+  <text x="300" y="400" text-anchor="middle" class="lb small" style="fill:#64748b">2</text>
+  <text x="375" y="400" text-anchor="middle" class="lb small" style="fill:#64748b">3</text>
+  <text x="450" y="400" text-anchor="middle" class="lb small" style="fill:#64748b">4</text>
+  <text x="525" y="400" text-anchor="middle" class="lb small" style="fill:#64748b">5</text>
+  <text x="600" y="400" text-anchor="middle" class="lb small" style="fill:#64748b">6</text>
+  <text x="675" y="400" text-anchor="middle" class="lb small" style="fill:#64748b">7</text>
+  <text x="750" y="400" text-anchor="middle" class="lb small" style="fill:#64748b">8</text>
+  <text x="825" y="400" text-anchor="middle" class="lb small" style="fill:#64748b">9</text>
+  <text x="900" y="400" text-anchor="middle" class="lb small" style="fill:#64748b">10</text>
+  <text x="138" y="400" text-anchor="end" class="lb small" style="fill:#64748b">토큰 생성 스텝 →</text>
+  <text x="138" y="430" text-anchor="end" class="lb body">GPU 슬롯 1</text>
+  <rect x="152" y="410" width="221" height="30" rx="5" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+  <text x="262.5" y="430" text-anchor="middle" class="lb blk" style="fill:#2563eb">A</text>
+  <rect x="377" y="410" width="221" height="30" rx="5" fill="#cffafe" stroke="#0891b2" stroke-width="2"/>
+  <text x="487.5" y="430" text-anchor="middle" class="lb blk" style="fill:#0891b2">F</text>
+  <rect x="602" y="410" width="221" height="30" rx="5" fill="#ecfccb" stroke="#4d7c0f" stroke-width="2"/>
+  <text x="712.5" y="430" text-anchor="middle" class="lb blk" style="fill:#4d7c0f">H</text>
+  <rect x="827" y="410" width="71" height="30" rx="5" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <text x="138" y="466" text-anchor="end" class="lb body">GPU 슬롯 2</text>
+  <rect x="152" y="446" width="596" height="30" rx="5" fill="#d1fae5" stroke="#059669" stroke-width="2"/>
+  <text x="450.0" y="466" text-anchor="middle" class="lb blk" style="fill:#059669">B</text>
+  <rect x="752" y="446" width="146" height="30" rx="5" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <text x="138" y="502" text-anchor="end" class="lb body">GPU 슬롯 3</text>
+  <rect x="152" y="482" width="146" height="30" rx="5" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+  <text x="225.0" y="502" text-anchor="middle" class="lb blk" style="fill:#d97706">C</text>
+  <rect x="302" y="482" width="296" height="30" rx="5" fill="#fce7f3" stroke="#db2777" stroke-width="2"/>
+  <text x="450.0" y="502" text-anchor="middle" class="lb blk" style="fill:#db2777">E</text>
+  <rect x="602" y="482" width="296" height="30" rx="5" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <text x="138" y="538" text-anchor="end" class="lb body">GPU 슬롯 4</text>
+  <rect x="152" y="518" width="371" height="30" rx="5" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+  <text x="337.5" y="538" text-anchor="middle" class="lb blk" style="fill:#7c3aed">D</text>
+  <rect x="527" y="518" width="371" height="30" rx="5" fill="#fee2e2" stroke="#dc2626" stroke-width="2"/>
+  <text x="712.5" y="538" text-anchor="middle" class="lb blk" style="fill:#dc2626">G</text>
+  <text x="60" y="574" class="lb st" style="fill:#15803d">결과 : 끝난 자리에 대기 중인 요청이 바로 들어감 → 스텝 10까지 완료 8개</text>
+  <rect x="20" y="610" width="920" height="122" rx="14" fill="#f0fdf4" stroke="#86efac" stroke-width="2"/>
+  <text x="44" y="638" class="lb sec">+ Fused Kernel — 여러 연산을 하나의 커널로 묶기</text>
+  <rect x="60" y="654" width="100" height="34" rx="6" fill="#ffffff" stroke="#94a3b8" stroke-width="2"/>
+  <text x="110" y="676" text-anchor="middle" class="lb small" style="font-weight:700">LayerNorm</text>
+  <line x1="162" y1="671" x2="182" y2="671" stroke="#64748b" stroke-width="2" marker-end="url(#ar)"/>
+  <rect x="185" y="654" width="100" height="34" rx="6" fill="#ffffff" stroke="#94a3b8" stroke-width="2"/>
+  <text x="235" y="676" text-anchor="middle" class="lb small" style="font-weight:700">MatMul</text>
+  <line x1="287" y1="671" x2="307" y2="671" stroke="#64748b" stroke-width="2" marker-end="url(#ar)"/>
+  <rect x="310" y="654" width="100" height="34" rx="6" fill="#ffffff" stroke="#94a3b8" stroke-width="2"/>
+  <text x="360" y="676" text-anchor="middle" class="lb small" style="font-weight:700">GELU</text>
+  <text x="235" y="710" text-anchor="middle" class="lb small" style="fill:#b91c1c">커널 3번 실행 · 중간 결과를 매번 메모리에 썼다 읽음</text>
+  <text x="480" y="678" text-anchor="middle" class="lb st" style="fill:#64748b">→</text>
+  <rect x="530" y="654" width="360" height="34" rx="6" fill="#dcfce7" stroke="#15803d" stroke-width="2"/>
+  <text x="710" y="676" text-anchor="middle" class="lb small" style="font-weight:700;fill:#15803d">LayerNorm + MatMul + GELU (하나의 커널)</text>
+  <text x="710" y="710" text-anchor="middle" class="lb small" style="fill:#15803d">커널 1번 실행 · 메모리 왕복이 줄어 토큰 생성이 빨라짐</text>
+</svg>
