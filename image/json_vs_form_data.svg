@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="450" viewBox="0 0 960 450" role="img" aria-labelledby="title desc">
+  <title id="title">JSON과 폼 데이터 비교</title>
+  <desc id="desc">JSON은 글자와 숫자만 담는 포장 방식이고, 폼 데이터(multipart/form-data)는 구분선으로 나뉜 칸마다 name, age 같은 글자 값이나 dog.jpg 같은 파일을 하나씩 담는 포장 방식이다. FastAPI에서는 JSON을 dict나 Pydantic 모델로, 폼 데이터를 Form과 File로 받는다.</desc>
+  <defs>
+    <style>
+      .label { font-family: "Noto Sans KR", "Noto Sans CJK KR", "Apple SD Gothic Neo", "Malgun Gothic", Arial, sans-serif; fill: #0f172a; }
+      .muted { fill: #475569; }
+      .white { fill: #ffffff; }
+      .title { font-size: 27px; font-weight: 700; }
+      .head { font-size: 19px; font-weight: 700; }
+      .body { font-size: 16px; }
+      .bold { font-weight: 700; }
+      .small { font-size: 14px; }
+      .tiny { font-size: 12px; }
+      .ok { fill: #15803d; }
+      .no { fill: #b91c1c; }
+      .code { font-family: "SFMono-Regular", Consolas, "DejaVu Sans Mono", monospace; font-size: 14px; fill: #0f172a; }
+      .code-l { font-family: "SFMono-Regular", Consolas, "DejaVu Sans Mono", monospace; font-size: 17px; fill: #0f172a; }
+      .field { font-family: "SFMono-Regular", Consolas, "DejaVu Sans Mono", monospace; font-size: 15px; font-weight: 700; fill: #7c2d12; }
+    </style>
+  </defs>
+  <rect width="960" height="450" fill="#ffffff"/>
+
+  <!-- 제목 -->
+  <text x="480" y="40" text-anchor="middle" class="label title">JSON vs 폼 데이터: Body를 포장하는 두 가지 방법</text>
+  <text x="480" y="68" text-anchor="middle" class="label body muted">파일을 함께 보내야 하면 폼 데이터(multipart/form-data)로 포장한다</text>
+
+  <!-- ===================== JSON ===================== -->
+  <rect x="24" y="90" width="440" height="344" rx="14" fill="#ffffff" stroke="#94a3b8" stroke-width="2"/>
+  <path d="M 24 104 A 14 14 0 0 1 38 90 H 450 A 14 14 0 0 1 464 104 V 128 H 24 Z" fill="#334155"/>
+  <text x="244" y="116" text-anchor="middle" class="label head white">JSON</text>
+  <text x="244" y="154" text-anchor="middle" class="code" style="fill:#475569">Content-Type: application/json</text>
+
+  <rect x="60" y="170" width="368" height="152" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
+  <text x="96" y="210" class="code-l">{</text>
+  <text x="116" y="240" class="code-l">"name": "<tspan class="label" style="font-size:17px">홍길동</tspan>",</text>
+  <text x="116" y="270" class="code-l">"age": 25</text>
+  <text x="96" y="300" class="code-l">}</text>
+
+  <circle cx="69" cy="346" r="9" fill="#15803d"/><path d="M 64.5 346 L 68 349.5 L 74 342.5" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="84" y="352" class="label body bold ok">글자·숫자</text>
+  <circle cx="205" cy="346" r="9" fill="#b91c1c"/><path d="M 201.5 342.5 L 208.5 349.5 M 208.5 342.5 L 201.5 349.5" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round"/>
+  <text x="220" y="352" class="label body bold no">사진 같은 파일은 못 담음</text>
+  <line x1="44" y1="372" x2="444" y2="372" stroke="#e2e8f0" stroke-width="1.5"/>
+  <text x="60" y="400" class="label small muted">FastAPI에서 받는 법</text>
+  <text x="60" y="422" class="code">body: dict</text>
+  <text x="160" y="422" class="label small">또는  Pydantic 모델</text>
+
+  <!-- ===================== 폼 데이터 ===================== -->
+  <rect x="496" y="90" width="440" height="344" rx="14" fill="#ffffff" stroke="#94a3b8" stroke-width="2"/>
+  <path d="M 496 104 A 14 14 0 0 1 510 90 H 922 A 14 14 0 0 1 936 104 V 128 H 496 Z" fill="#c2410c"/>
+  <text x="716" y="116" text-anchor="middle" class="label head white">폼 데이터 (Form Data)</text>
+  <text x="716" y="154" text-anchor="middle" class="code" style="fill:#475569">Content-Type: multipart/form-data</text>
+
+  <rect x="532" y="170" width="368" height="152" rx="10" fill="#fff7ed" stroke="#f97316" stroke-width="2"/>
+  <!-- 칸 1 -->
+  <text x="552" y="203" class="field">name</text>
+  <text x="652" y="203" class="label body">홍길동</text>
+  <path d="M 532 220 H 900" stroke="#f97316" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <rect x="806" y="212" width="86" height="16" fill="#fff7ed"/>
+  <text x="849" y="225" text-anchor="middle" class="label tiny muted">구분선</text>
+  <!-- 칸 2 -->
+  <text x="552" y="253" class="field">age</text>
+  <text x="652" y="253" class="label body">25</text>
+  <path d="M 532 270 H 900" stroke="#f97316" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <!-- 칸 3: 파일 -->
+  <text x="552" y="302" class="field">file</text>
+  <rect x="652" y="281" width="30" height="26" rx="3" fill="#ffffff" stroke="#64748b" stroke-width="1.5"/>
+  <circle cx="674" cy="289" r="3" fill="#f59e0b"/>
+  <path d="M 655 304 L 664 293 L 671 300 L 676 295 L 680 304 Z" fill="#22c55e"/>
+  <text x="692" y="302" class="label body">dog.jpg</text>
+  <text x="784" y="302" class="label small muted">(사진 파일)</text>
+
+  <circle cx="541" cy="346" r="9" fill="#15803d"/><path d="M 536.5 346 L 540 349.5 L 546 342.5" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="556" y="352" class="label body bold ok">글자·숫자 + 파일을 칸마다 하나씩</text>
+  <line x1="516" y1="372" x2="916" y2="372" stroke="#e2e8f0" stroke-width="1.5"/>
+  <text x="532" y="400" class="label small muted">FastAPI에서 받는 법</text>
+  <text x="532" y="422" class="label small">글자 →</text>
+  <text x="580" y="422" class="code">Form(...)</text>
+  <text x="690" y="422" class="label small">파일 →</text>
+  <text x="738" y="422" class="code">File(...)</text>
+</svg>

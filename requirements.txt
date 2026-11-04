@@ -5,7 +5,7 @@ plotly
 altair
 scikit-learn
 streamlit
-fastapi
+fastapi[standard]
 uvicorn
 torch>=2.4
 torchvision>=0.19

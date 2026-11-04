@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="530" viewBox="0 0 960 530" role="img" aria-labelledby="title desc">
+  <title id="title">HTTP 요청과 응답의 구조</title>
+  <desc id="desc">HTTP 요청과 응답은 모두 시작 줄, 헤더, 빈 줄, 바디 순서로 이루어진다. 요청의 시작 줄은 Method, URL, 버전으로, 응답의 시작 줄은 버전, 상태 코드, 상태 메시지로 구성된다.</desc>
+  <defs>
+    <style>
+      .label { font-family: "Noto Sans KR", "Noto Sans CJK KR", "Apple SD Gothic Neo", "Malgun Gothic", Arial, sans-serif; fill: #0f172a; }
+      .muted { fill: #475569; }
+      .white { fill: #ffffff; }
+      .title { font-size: 27px; font-weight: 700; }
+      .body { font-size: 16px; }
+      .bold { font-weight: 700; }
+      .small { font-size: 14px; }
+      .tiny { font-size: 12px; }
+      .code { font-family: "SFMono-Regular", Consolas, "DejaVu Sans Mono", monospace; font-size: 14px; fill: #0f172a; }
+      .code-b { font-family: "SFMono-Regular", Consolas, "DejaVu Sans Mono", monospace; font-size: 15px; font-weight: 700; fill: #0f172a; }
+    </style>
+  </defs>
+  <rect width="960" height="530" fill="#ffffff"/>
+
+  <!-- 제목 -->
+  <text x="480" y="40" text-anchor="middle" class="label title">HTTP 요청과 응답의 구조</text>
+  <text x="480" y="68" text-anchor="middle" class="label body muted">둘 다 시작 줄 → 헤더 → (빈 줄) → 바디 순서로 이루어진다</text>
+
+  <!-- ===================== Request ===================== -->
+  <rect x="24" y="88" width="448" height="426" rx="14" fill="#ffffff" stroke="#94a3b8" stroke-width="2"/>
+  <path d="M 24 102 A 14 14 0 0 1 38 88 H 458 A 14 14 0 0 1 472 102 V 124 H 24 Z" fill="#334155"/>
+  <text x="248" y="112" text-anchor="middle" class="label body bold white">Request (요청) · 클라이언트 → 서버</text>
+
+  <!-- Start Line -->
+  <rect x="40" y="138" width="96" height="84" rx="8" fill="#f59e0b"/>
+  <text x="88" y="175" text-anchor="middle" class="label small bold white">Start Line</text>
+  <text x="88" y="196" text-anchor="middle" class="label tiny white">요청 라인</text>
+  <rect x="144" y="138" width="312" height="84" rx="8" fill="#fff7ed" stroke="#f59e0b" stroke-width="2"/>
+  <text x="160" y="172" class="code-b">POST</text>
+  <text x="238" y="172" class="code-b">/users</text>
+  <text x="350" y="172" class="code-b">HTTP/1.1</text>
+  <text x="178" y="204" text-anchor="middle" class="label tiny muted">Method</text>
+  <text x="265" y="204" text-anchor="middle" class="label tiny muted">URL</text>
+  <text x="386" y="204" text-anchor="middle" class="label tiny muted">HTTP 버전</text>
+
+  <!-- Header -->
+  <rect x="40" y="232" width="96" height="112" rx="8" fill="#3b82f6"/>
+  <text x="88" y="282" text-anchor="middle" class="label small bold white">Header</text>
+  <text x="88" y="303" text-anchor="middle" class="label tiny white">부가 정보</text>
+  <rect x="144" y="232" width="312" height="112" rx="8" fill="#eff6ff" stroke="#3b82f6" stroke-width="2"/>
+  <text x="160" y="258" class="code">Host: example.com</text>
+  <text x="160" y="281" class="code">Authorization: Bearer ABCD1234</text>
+  <text x="160" y="304" class="code">Content-Type: application/json</text>
+  <text x="160" y="327" class="code">Content-Length: 34</text>
+
+  <!-- 빈 줄 -->
+  <path d="M 144 360 H 456" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="5 4"/>
+  <rect x="246" y="351" width="108" height="18" fill="#ffffff"/>
+  <text x="300" y="365" text-anchor="middle" class="label tiny muted">빈 줄 (헤더 끝)</text>
+
+  <!-- Body -->
+  <rect x="40" y="378" width="96" height="120" rx="8" fill="#22c55e"/>
+  <text x="88" y="432" text-anchor="middle" class="label small bold white">Body</text>
+  <text x="88" y="453" text-anchor="middle" class="label tiny white">실제 데이터</text>
+  <rect x="144" y="378" width="312" height="120" rx="8" fill="#f0fdf4" stroke="#22c55e" stroke-width="2"/>
+  <text x="160" y="406" class="code">{</text>
+  <text x="177" y="429" class="code">"name": "minsu",</text>
+  <text x="177" y="452" class="code">"age": 25</text>
+  <text x="160" y="475" class="code">}</text>
+  <text x="440" y="488" text-anchor="end" class="label tiny muted">GET 요청은 보통 Body 없음</text>
+
+  <!-- ===================== Response ===================== -->
+  <rect x="488" y="88" width="448" height="426" rx="14" fill="#ffffff" stroke="#94a3b8" stroke-width="2"/>
+  <path d="M 488 102 A 14 14 0 0 1 502 88 H 922 A 14 14 0 0 1 936 102 V 124 H 488 Z" fill="#2563eb"/>
+  <text x="712" y="112" text-anchor="middle" class="label body bold white">Response (응답) · 서버 → 클라이언트</text>
+
+  <!-- Start Line -->
+  <rect x="504" y="138" width="96" height="84" rx="8" fill="#f59e0b"/>
+  <text x="552" y="175" text-anchor="middle" class="label small bold white">Start Line</text>
+  <text x="552" y="196" text-anchor="middle" class="label tiny white">상태 라인</text>
+  <rect x="608" y="138" width="312" height="84" rx="8" fill="#fff7ed" stroke="#f59e0b" stroke-width="2"/>
+  <text x="624" y="172" class="code-b">HTTP/1.1</text>
+  <text x="742" y="172" class="code-b">200</text>
+  <text x="832" y="172" class="code-b">OK</text>
+  <text x="660" y="204" text-anchor="middle" class="label tiny muted">HTTP 버전</text>
+  <text x="756" y="204" text-anchor="middle" class="label tiny muted">상태 코드</text>
+  <text x="841" y="204" text-anchor="middle" class="label tiny muted">상태 메시지</text>
+
+  <!-- Header -->
+  <rect x="504" y="232" width="96" height="112" rx="8" fill="#3b82f6"/>
+  <text x="552" y="282" text-anchor="middle" class="label small bold white">Header</text>
+  <text x="552" y="303" text-anchor="middle" class="label tiny white">부가 정보</text>
+  <rect x="608" y="232" width="312" height="112" rx="8" fill="#eff6ff" stroke="#3b82f6" stroke-width="2"/>
+  <text x="624" y="281" class="code">Content-Type: application/json</text>
+  <text x="624" y="304" class="code">Content-Length: 50</text>
+
+  <!-- 빈 줄 -->
+  <path d="M 608 360 H 920" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="5 4"/>
+  <rect x="710" y="351" width="108" height="18" fill="#ffffff"/>
+  <text x="764" y="365" text-anchor="middle" class="label tiny muted">빈 줄 (헤더 끝)</text>
+
+  <!-- Body -->
+  <rect x="504" y="378" width="96" height="120" rx="8" fill="#22c55e"/>
+  <text x="552" y="432" text-anchor="middle" class="label small bold white">Body</text>
+  <text x="552" y="453" text-anchor="middle" class="label tiny white">실제 데이터</text>
+  <rect x="608" y="378" width="312" height="120" rx="8" fill="#f0fdf4" stroke="#22c55e" stroke-width="2"/>
+  <text x="624" y="402" class="code">{</text>
+  <text x="641" y="424" class="code">"user_id": 1,</text>
+  <text x="641" y="446" class="code">"name": "minsu",</text>
+  <text x="641" y="468" class="code">"age": 25</text>
+  <text x="624" y="490" class="code">}</text>
+</svg>
