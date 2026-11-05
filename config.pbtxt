@@ -1,28 +1,23 @@
-name: "resnet18"
-platform: "onnxruntime_onnx"
-
-max_batch_size: 8
+name: "resnet18"                  # 모델 이름 (모델 저장소의 폴더 이름과 같아야 함)
+platform: "onnxruntime_onnx"      # ONNX Runtime 백엔드로 실행
+max_batch_size: 32                # 한 번에 묶어 처리할 최대 배치 크기 (0보다 크면 배치 차원이 자동으로 붙음)
 
 input [
   {
-    name: "input"
-    data_type: TYPE_FP32
-    dims: [3, 224, 224]
+    name: "input"                 # ONNX 변환 시 지정한 입력 텐서 이름
+    data_type: TYPE_FP32          # 입력 데이터 타입 (float32)
+    dims: [3, 224, 224]           # 배치 차원을 제외한 입력 형태 (C, H, W)
   }
 ]
-
 output [
   {
-    name: "output"
-    data_type: TYPE_FP32
-    dims: [1000]
+    name: "output"                # ONNX 변환 시 지정한 출력 텐서 이름
+    data_type: TYPE_FP32          # 출력 데이터 타입 (float32)
+    dims: [1000]                  # 배치 차원을 제외한 출력 형태 (ImageNet 1000개 클래스)
   }
 ]
 
-instance_group [
-  {
-    kind: KIND_GPU
-    count: 1
-  }
-]
-
+dynamic_batching {                # 서버가 요청을 잠시 모아 자동으로 배치 처리
+  preferred_batch_size: [4, 8, 16]      # 이 개수만큼 모이면 대기 시간이 남아도 바로 실행
+  max_queue_delay_microseconds: 2000    # 최대 2ms까지만 기다리고 모인 만큼 실행
+}
